@@ -16,8 +16,12 @@ MessageFactory.init(rtm);
 
 rtm.start();
 
+// BOTが参加しているチャンネルでメッセージのやりときがあった時に呼ばれる
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
-	MessageFactory.sendMessage(message);
+	MessageFactory.sendMessage(message, function(res, mes)
+	{
+		console.log(mes);
+	});
 });
 
 rtm.on(RTM_EVENTS.REACTION_ADDED, function handleRtmReactionAdded(reaction) {
