@@ -34,8 +34,7 @@
 			callback(false, 'ERROR: メッセージを受け取れませんでした');
 			return;
 		}
-		console.log('Message:', slackMessageObj);
-
+		// console.log('Message:', slackMessageObj);
 		selectModel(slackMessageObj, function(modelName)
 		{
 			if (messageModels[modelName] === undefined) {
