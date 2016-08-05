@@ -85,11 +85,6 @@
 	 * @param string message
 	 * @param string channel
 	 * @param function(boolean, string) callback(result, resultMessage)
-	 *
-	 * DMしたい時:
-	 * var user = rtm.dataStore.getUserById(slackMessageObj.user);
-	 * var dm   = rtm.dataStore.getDMByName(user.name);
-	 * dm.id を channel に指定する
 	 */
 	var sendToSlack = function(message, channel, callback)
 	{
