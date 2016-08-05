@@ -3,20 +3,21 @@ var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
 
 var config = require('./config.js').config;
 
-// var token = process.env.SLACK_API_TOKEN || '';
-// var rtm = new RtmClient(token, { logLevel: 'debug' });
+var MessageFactory = require('./models/MessageFactory.js').MessageFactory;
 
+// var token = process.env.SLACK_API_TOKEN || '';
+
+/**
+ * logLevel: 'debug', 'error'
+ */
 var rtm = new RtmClient(config.SLACK_API_TOKEN, { logLevel: 'error' });
+
+MessageFactory.init(rtm);
 
 rtm.start();
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
-	console.log('Message:', message);
-
-	var user = rtm.dataStore.getUserById(message.user)
-	var dm   = rtm.dataStore.getDMByName(user.name);
-
-	rtm.sendMessage(user.name + ' ぺろぺろぺろぺろ', dm.id);
+	MessageFactory.sendMessage(message);
 });
 
 rtm.on(RTM_EVENTS.REACTION_ADDED, function handleRtmReactionAdded(reaction) {
