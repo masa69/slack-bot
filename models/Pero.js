@@ -11,6 +11,7 @@
 	var rtm = null;
 
 	var config = require('./../config.js').config;
+	var _ = require('lodash');
 
 	var lists = config.peros;
 
@@ -27,13 +28,48 @@
 			callback(false);
 			return;
 		}
+		if (!rtm) {
+			rtm = obj.rtmClient;
+		}
 
-		rtm = obj.rtmClient;
+		var slackMessageObj = obj.slackMessageObj;
 
-		setMessage('ぺろぺろぺろぺろ');
-		setChannel(obj.slackMessageObj);
+		checkText(slackMessageObj.text, function(res)
+		{
+			if (!res) {
+				callback(false);
+				return;
+			}
+			setMessage('呼んだ？ぺろぺろぺろぺろ');
+			/**
+			 * DM の場合
+			 */
+			// var user = rtm.dataStore.getUserById(slackMessageObj.user);
+			// var dm   = rtm.dataStore.getDMByName(user.name);
+			// setChannel(dm.id);
 
-		callback(true);
+			/**
+			 * チャンネルの場合
+			 */
+			setChannel(slackMessageObj.channel);
+			callback(true);
+		});
+	};
+
+	var checkText = function(text, callback)
+	{
+		var res = false;
+
+		_.map(lists, function(value)
+		{
+			var reg = new RegExp(value, 'igm');
+			if (reg.test(text)) {
+				// console.log('まっち！');
+				res = true;
+			}
+		});
+
+		callback(res);
 	};
 
 	self.getMessage = function()
@@ -51,19 +87,9 @@
 		return channel;
 	};
 
-	var setChannel = function(slackMessageObj)
+	var setChannel = function(slackChannel)
 	{
-		/**
-		 * DM の場合
-		 */
-		// var user = rtm.dataStore.getUserById(slackMessageObj.user);
-		// var dm   = rtm.dataStore.getDMByName(user.name);
-		// channel = dm.id;
-
-		/**
-		 * チャンネルの場合
-		 */
-		channel = slackMessageObj.channel;
+		channel = slackChannel;
 	};
 
 	module.exports.Pero = self;
