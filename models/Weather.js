@@ -1,5 +1,17 @@
 /**
  * 天気を教えるBOT
+ * 下記のAPIを利用して天気情報を取得する
+ *
+ * Google Maps Geocoding API
+ * https://developers.google.com/maps/documentation/geocoding/intro?hl=ja
+ *
+ * GoogleMap検索のように住所を検索して経度＆緯度を取得する
+ *
+ *
+ * OpenWeatherMap API
+ * http://openweathermap.org/api
+ *
+ * 経度＆緯度を利用して天気情報を取得する
  */
 (function()
 {
