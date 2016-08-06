@@ -156,30 +156,40 @@
 			switch (value) {
 				// case 'clear sky':
 				case '01d':
-					return ':sunny:';
+					return ':sun_with_face:';
+				case '01n':
+					return ':full_moon_with_face:';
 				// case 'few clouds':
 				case '02d':
+				case '02n':
 					return ':mostly_sunny:';
 				// case 'scattered clouds':
 				case '03d':
+				case '03n':
 					return ':barely_sunny:';
 				// case 'broken clouds':
 				case '04d':
+				case '04n':
 					return ':cloud:';
 				// case 'shower rain':
 				case '09d':
+				case '09n':
 					return ':rain_cloud:';
 				// case 'rain':
 				case '10d':
+				case '10n':
 					return ':umbrella_with_rain_drops:';
 				// case 'thunderstorm':
 				case '11d':
+				case '11n':
 					return ':lightning:';
 				// case 'snow':
 				case '13d':
+				case '13n':
 					return ':snowman_without_snow:';
 				// case 'mist':
 				case '50d':
+				case '50n':
 					return ':fog:';
 				default:
 					return ':face_with_rolling_eyes:';
