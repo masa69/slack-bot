@@ -65,7 +65,8 @@
 					// console.log(JSON.stringify(data, '', 2));
 					if (res) {
 						// callback(false);
-						setMessage('```' + JSON.stringify(data, '', 2) + '```');
+						// setMessage('```' + JSON.stringify(data, '', 2) + '```');
+						setMessage(data);
 						/**
 						 * DM の場合
 						 */
@@ -144,7 +145,34 @@
 		var params = {
 			lat: lat,
 			lon: lng,
+			units: 'metric',
 			appid: config.OPEN_WEATHER_MAP_API_KEY,
+		};
+
+		var getIcon = function(value)
+		{
+			switch (value) {
+				case 'clear sky':
+					return ':sunny:';
+				case 'few clouds':
+					return ':mostly_sunny:';
+				case 'scattered clouds':
+					return ':barely_sunny:';
+				case 'broken clouds':
+					return ':cloud:';
+				case 'shower rain':
+					return ':rain_cloud:';
+				case 'rain':
+					return ':umbrella_with_rain_drops:';
+				case 'thunderstorm':
+					return ':lightning:';
+				case 'snow':
+					return ':snowman_without_snow:';
+				case 'mist':
+					return ':fog:';
+				default:
+					return ':face_with_rolling_eyes:';
+			}
 		};
 
 		request({ url: 'http://api.openweathermap.org/data/2.5/weather', qs: params }, function(error, httpResponse, body)
@@ -154,7 +182,32 @@
 			// console.log(httpResponse.statusMessage);
 			// console.log(error, body);
 			if (httpResponse.statusCode === 200) {
-				callback(true, JSON.parse(body));
+				body = JSON.parse(body);
+
+				var res = '';
+
+				_.map(body.weather, function(obj)
+				{
+					// res += getIcon(obj.description) + ' ' + obj.description;
+					res += getIcon(obj.description);
+				});
+
+				var rain = '0';
+
+				if (body.hasOwnProperty('rain')) {
+					if (body.rain.hasOwnProperty('3h')) {
+						rain =  body.rain['3h'];
+					}
+				}
+
+				// res += '気温 ' + body.main.temp + '℃, 最低気温 ' + body.main.temp_min + '℃, 最高気温 ' + body.main.temp_max + '℃\n';
+				res += ' *_' + body.main.temp + '℃_*\n';
+				res += '最低気温 ' + body.main.temp_min + '℃, 最高気温 ' + body.main.temp_max + '℃\n';
+				res += '降水量 ' + rain + 'mm, 雲の量 ' + body.clouds.all + '％\n';
+				res += '湿度 ' + body.main.humidity + '％, 気圧 ' + body.main.pressure + 'hpa\n';
+				// console.log(res);
+				callback(true, res);
+				// callback(true, body);
 			} else {
 				callback(false, null);
 			}
