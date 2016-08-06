@@ -11,6 +11,6 @@
   "dependencies": {
     "@slack/client": "^3.x",
     "lodash": "^4.x",
-    "xhr": "^2.2.2"
+    "request": "^2.74.0"
   }
 }
