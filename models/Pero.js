@@ -15,8 +15,8 @@
 
 	var lists = config.peros;
 
-	var message = null
-	var channel = null
+	var message = null;
+	var channel = null;
 
 	self.init = function(obj, callback)
 	{
