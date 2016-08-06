@@ -151,24 +151,34 @@
 
 		var getIcon = function(value)
 		{
+			console.log(value);
 			switch (value) {
-				case 'clear sky':
+				// case 'clear sky':
+				case '01d':
 					return ':sunny:';
-				case 'few clouds':
+				// case 'few clouds':
+				case '02d':
 					return ':mostly_sunny:';
-				case 'scattered clouds':
+				// case 'scattered clouds':
+				case '03d':
 					return ':barely_sunny:';
-				case 'broken clouds':
+				// case 'broken clouds':
+				case '04d':
 					return ':cloud:';
-				case 'shower rain':
+				// case 'shower rain':
+				case '09d':
 					return ':rain_cloud:';
-				case 'rain':
+				// case 'rain':
+				case '10d':
 					return ':umbrella_with_rain_drops:';
-				case 'thunderstorm':
+				// case 'thunderstorm':
+				case '11d':
 					return ':lightning:';
-				case 'snow':
+				// case 'snow':
+				case '13d':
 					return ':snowman_without_snow:';
-				case 'mist':
+				// case 'mist':
+				case '50d':
 					return ':fog:';
 				default:
 					return ':face_with_rolling_eyes:';
@@ -189,7 +199,8 @@
 				_.map(body.weather, function(obj)
 				{
 					// res += getIcon(obj.description) + ' ' + obj.description;
-					res += getIcon(obj.description);
+					// res += getIcon(obj.description);
+					res += getIcon(obj.icon) + ' *(' + obj.description + ')* ';
 				});
 
 				var rain = '0';
