@@ -59,7 +59,8 @@
 					callback(false);
 					return;
 				}
-				getWeather(data.lat, data.lng, function(res, data)
+				// console.log(data.lat.toFixed(1), data.lng.toFixed(1));
+				getWeather(data.lat.toFixed(1), data.lng.toFixed(1), function(res, data)
 				{
 					// console.log(res, data);
 					// console.log(JSON.stringify(data, '', 2));
@@ -151,7 +152,7 @@
 
 		var getIcon = function(value)
 		{
-			console.log(value);
+			// console.log(value);
 			switch (value) {
 				// case 'clear sky':
 				case '01d':
