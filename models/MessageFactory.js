@@ -11,6 +11,7 @@
 
 	var messageModels = {
 		Pero: require('./Pero.js').Pero,
+		Weather: require('./Weather.js').Weather,
 	};
 
 
