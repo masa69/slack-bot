@@ -183,7 +183,7 @@
 			// console.log(error, body);
 			if (httpResponse.statusCode === 200) {
 				body = JSON.parse(body);
-
+				console.log(body);
 				var res = '';
 
 				_.map(body.weather, function(obj)
