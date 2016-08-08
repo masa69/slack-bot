@@ -38,7 +38,7 @@
 		// console.log('Message:', slackMessageObj);
 		selectModel(slackMessageObj, function(modelName)
 		{
-			if (messageModels[modelName] === undefined) {
+			if (!messageModels.hasOwnProperty(modelName)) {
 				return;
 			}
 			var model = messageModels[modelName];

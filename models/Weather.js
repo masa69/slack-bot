@@ -19,12 +19,9 @@
 
 	var self = {};
 
-	// RtmClient
-	var rtm = null;
-
-	var config = require('./../config.js').config;
+	var config  = require('./../config.js').config;
 	var request = require('request');
-	var _ = require('lodash');
+	var _       = require('lodash');
 
 	var message = null;
 	var channel = null;
@@ -39,10 +36,8 @@
 			callback(false);
 			return;
 		}
-		if (!rtm) {
-			rtm = obj.rtmClient;
-		}
 
+		var rtm             = obj.rtmClient;
 		var slackMessageObj = obj.slackMessageObj;
 
 		checkText(slackMessageObj.text, function(res, q)
@@ -110,6 +105,14 @@
 		callback(res, q);
 	};
 
+
+	/**
+	 * Google Maps Geocoding API を使用して
+	 * 経度と緯度を取得する
+	 *
+	 * @param string q
+	 * @param function(boolean, object|null) callback(result, locationData)
+	 */
 	var getGeometry = function(q, callback)
 	{
 		if (!q) {
@@ -124,9 +127,6 @@
 		request({ url: 'https://maps.googleapis.com/maps/api/geocode/json', qs: params }, function(error, httpResponse, body)
 		{
 			// console.log(error, httpResponse, body);
-			// console.log(httpResponse.statusCode);
-			// console.log(httpResponse.statusMessage);
-			// console.log(error, body);
 			if (httpResponse.statusCode === 200) {
 				body = JSON.parse(body);
 				// console.log(body);
@@ -140,6 +140,15 @@
 		});
 	};
 
+
+	/**
+	 * OpenWeatherMap API を使用して
+	 * 現在の天気情報を取得する
+	 *
+	 * @param string|int lat latitude: 緯度
+	 * @param string|int lon longitude: 経度
+	 * @param function(boolean, string) callback(result, weatherData)
+	 */
 	var getWeather = function(lat, lng, callback)
 	{
 		// 武蔵野市
@@ -199,12 +208,9 @@
 		request({ url: 'http://api.openweathermap.org/data/2.5/weather', qs: params }, function(error, httpResponse, body)
 		{
 			// console.log(error, httpResponse, body);
-			// console.log(httpResponse.statusCode);
-			// console.log(httpResponse.statusMessage);
-			// console.log(error, body);
 			if (httpResponse.statusCode === 200) {
 				body = JSON.parse(body);
-				console.log(body);
+
 				var res = '';
 
 				_.map(body.weather, function(obj)
@@ -222,12 +228,12 @@
 					}
 				}
 
-				// res += '気温 ' + body.main.temp + '℃, 最低気温 ' + body.main.temp_min + '℃, 最高気温 ' + body.main.temp_max + '℃\n';
 				res += ' *_' + body.main.temp + '℃_*\n';
 				res += '最低気温 ' + body.main.temp_min + '℃, 最高気温 ' + body.main.temp_max + '℃\n';
 				res += '降水量 ' + rain + 'mm, 雲の量 ' + body.clouds.all + '％\n';
 				res += '湿度 ' + body.main.humidity + '％, 気圧 ' + body.main.pressure + 'hpa\n';
 				// console.log(res);
+				console.log(body);
 				callback(true, res);
 				// callback(true, body);
 			} else {

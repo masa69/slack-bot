@@ -7,11 +7,8 @@
 
 	var self = {};
 
-	// RtmClient
-	var rtm = null;
-
 	var config = require('./../config.js').config;
-	var _ = require('lodash');
+	var _      = require('lodash');
 
 	var lists = config.peros;
 
@@ -28,10 +25,8 @@
 			callback(false);
 			return;
 		}
-		if (!rtm) {
-			rtm = obj.rtmClient;
-		}
 
+		var rtm             = obj.rtmClient;
 		var slackMessageObj = obj.slackMessageObj;
 
 		checkText(slackMessageObj.text, function(res)
