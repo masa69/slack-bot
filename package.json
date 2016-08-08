@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@slack/client": "^3.x",
-    "lodash": "^4.x"
+    "lodash": "^4.x",
+    "request": "^2.74.0"
   }
 }
